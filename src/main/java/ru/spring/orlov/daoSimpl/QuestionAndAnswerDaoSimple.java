@@ -34,8 +34,7 @@ public class QuestionAndAnswerDaoSimple implements QuestionAndAnswerDao {
             CsvToBean csv = new CsvToBean();
             List list = csv.parse(setColumMapping(), reader);
             for (Object object : list) {
-                QuestionAndAnswer questionAndAnswer = (QuestionAndAnswer) object;
-                answerList.add(questionAndAnswer);
+                answerList.add((QuestionAndAnswer) object);
             }
         } catch (IOException e) {
             System.out.println("Error CSVReader" + e);
