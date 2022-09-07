@@ -1,9 +1,10 @@
 package ru.spring.orlov.daoSimpl;
 
 import au.com.bytecode.opencsv.CSVReader;
+import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy;
+import au.com.bytecode.opencsv.bean.CsvToBean;
 import lombok.AllArgsConstructor;
 import ru.spring.orlov.dao.QuestionAndAnswerDao;
-import ru.spring.orlov.exception.CustomException;
 import ru.spring.orlov.model.QuestionAndAnswer;
 
 import java.io.IOException;
@@ -18,6 +19,7 @@ public class QuestionAndAnswerDaoSimple implements QuestionAndAnswerDao {
     private String nameFile;
 
     @Override
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public List<QuestionAndAnswer> findByQuestionAndAnswer() {
         List<QuestionAndAnswer> answerList = new ArrayList<>();
         ClassLoader classLoader = getClass().getClassLoader();
@@ -29,17 +31,24 @@ public class QuestionAndAnswerDaoSimple implements QuestionAndAnswerDao {
             throw new IllegalArgumentException("file not found " + nameFile);
         }
         try (CSVReader reader = new CSVReader(inputStreamReader, ',', '"', 0)) {
-            String[] nextLine;
-            while ((nextLine = reader.readNext()) != null) {
-                if (nextLine.length == 2) {
-                    answerList.add(new QuestionAndAnswer(nextLine[0], nextLine[1]));
-                } else {
-                    throw new CustomException("Invalid set of rows or columns in the csv file " + nameFile);
-                }
+            CsvToBean csv = new CsvToBean();
+            List list = csv.parse(setColumMapping(), reader);
+            for (Object object : list) {
+                QuestionAndAnswer questionAndAnswer = (QuestionAndAnswer) object;
+                System.out.println(questionAndAnswer);
             }
         } catch (IOException e) {
             System.out.println("Error CSVReader" + e);
         }
         return answerList;
+    }
+
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    private static ColumnPositionMappingStrategy setColumMapping() {
+        ColumnPositionMappingStrategy strategy = new ColumnPositionMappingStrategy();
+        strategy.setType(QuestionAndAnswer.class);
+        String[] columns = new String[]{"question", "answer"};
+        strategy.setColumnMapping(columns);
+        return strategy;
     }
 }
