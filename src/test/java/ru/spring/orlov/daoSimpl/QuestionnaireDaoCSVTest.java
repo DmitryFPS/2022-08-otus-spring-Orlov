@@ -1,4 +1,4 @@
-package ru.spring.orlov.serviceImpl;
+package ru.spring.orlov.daoSimpl;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -6,9 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.spring.orlov.dao.QuestionnaireDao;
-import ru.spring.orlov.daoSimpl.QuestionnaireDaoCSV;
 import ru.spring.orlov.model.Questionnaire;
-import ru.spring.orlov.service.QuestionnaireService;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,18 +15,15 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-@DisplayName("Class QuestionAndAnswerServiceImpl")
+@DisplayName("Class QuestionAndAnswerDaoSimple")
 @ExtendWith(MockitoExtension.class)
-class QuestionnaireServiceImplTest {
-
-    private QuestionnaireService subj;
+class QuestionnaireDaoCSVTest {
 
     private QuestionnaireDao questionnaireDao;
 
     @BeforeEach
     void setUp() {
         questionnaireDao = mock(QuestionnaireDaoCSV.class);
-        subj = new QuestionnaireServiceImpl(questionnaireDao);
     }
 
     @Test
@@ -41,11 +36,8 @@ class QuestionnaireServiceImplTest {
                 new Questionnaire("Higher education", "yes"),
                 new Questionnaire("Your profession", "IT"));
         when(questionnaireDao.findByQuestionAndAnswer()).thenReturn(answerList);
-
-        List<Questionnaire> questionnaireList = subj.findByQuestionAndAnswer();
-        assertEquals(answerList, questionnaireList);
-        assertEquals(answerList.size(), questionnaireList.size());
-
+        List<Questionnaire> questionnaireList = questionnaireDao.findByQuestionAndAnswer();
+        assertNotEquals(questionnaireList.size(), 0);
         assertEquals(questionnaireList.get(0).getQuestion(), "Your age");
         assertEquals(questionnaireList.get(1).getQuestion(), "Country of residence");
         assertEquals(questionnaireList.get(2).getQuestion(), "City of residence");
@@ -69,8 +61,8 @@ class QuestionnaireServiceImplTest {
                 new Questionnaire("Higher education", "yes"),
                 new Questionnaire("Your profession", "IT"));
         when(questionnaireDao.findByQuestionAndAnswer()).thenReturn(answerList);
-
-        List<Questionnaire> questionnaireList = subj.findByQuestionAndAnswer();
+        List<Questionnaire> questionnaireList = questionnaireDao.findByQuestionAndAnswer();
+        assertNotEquals(questionnaireList.size(), 888);
         assertNotEquals(questionnaireList.get(0).getQuestion(), "Your age888");
         assertNotEquals(questionnaireList.get(1).getQuestion(), "Country of residence888");
         assertNotEquals(questionnaireList.get(2).getQuestion(), "City of residence888");

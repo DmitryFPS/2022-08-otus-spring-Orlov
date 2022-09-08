@@ -9,4 +9,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Questionnaire {
     private String question;
+    private String answer;
 }

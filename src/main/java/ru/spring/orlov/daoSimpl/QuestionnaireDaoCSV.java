@@ -15,12 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
-public class QuestionnaireDaoSimple implements QuestionnaireDao {
+public class QuestionnaireDaoCSV implements QuestionnaireDao {
 
     private String nameFile;
 
     @Override
-    @SuppressWarnings({"rawtypes", "unchecked"})
     public List<Questionnaire> findByQuestionAndAnswer() {
         List<Questionnaire> answerList = new ArrayList<>();
 
@@ -28,24 +27,20 @@ public class QuestionnaireDaoSimple implements QuestionnaireDao {
              InputStreamReader inputStreamReader = new InputStreamReader(resource);
              CSVReader reader = new CSVReader(inputStreamReader, ',', '"', 0)) {
 
-            CsvToBean csv = new CsvToBean();
-            List list = csv.parse(setColumMapping(), reader);
-            for (Object object : list) {
-                answerList.add((Questionnaire) object);
-            }
+            CsvToBean<Questionnaire> csv = new CsvToBean<>();
+            List<Questionnaire> list = csv.parse(setColumMapping(), reader);
+            answerList.addAll(list);
 
         } catch (IOException e) {
             System.out.println("Error I/O " + e);
         }
-
         return answerList;
     }
 
-    @SuppressWarnings({"rawtypes", "unchecked"})
-    private static ColumnPositionMappingStrategy setColumMapping() {
-        ColumnPositionMappingStrategy strategy = new ColumnPositionMappingStrategy();
+    private static ColumnPositionMappingStrategy<Questionnaire> setColumMapping() {
+        ColumnPositionMappingStrategy<Questionnaire> strategy = new ColumnPositionMappingStrategy<>();
         strategy.setType(Questionnaire.class);
-        String[] columns = new String[]{"question"};
+        String[] columns = new String[]{"question", "answer"};
         strategy.setColumnMapping(columns);
         return strategy;
     }
