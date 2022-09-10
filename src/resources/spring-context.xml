@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="questionAndAnswerDaoSimple" class="ru.spring.orlov.daoSimpl.QuestionnaireDaoCSV">
+        <constructor-arg type="java.lang.String" value="data.csv"/>
+    </bean>
+
+
+    <bean id="questionAndAnswerServiceImpl" class="ru.spring.orlov.serviceImpl.QuestionnaireServiceImpl">
+        <constructor-arg ref="questionAndAnswerDaoSimple"/>
+    </bean>
+
+    <bean id="startPage" class="ru.spring.orlov.view.StartPage">
+        <constructor-arg ref="questionAndAnswerServiceImpl"/>
+    </bean>
+</beans>
