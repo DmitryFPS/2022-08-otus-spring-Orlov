@@ -18,12 +18,17 @@ public class IOServiceStreams implements IOService {
     }
 
     @Override
-    public Scanner reader() {
-        return input;
+    public void outputString(String s) {
+        output.println(s);
     }
 
     @Override
-    public void outputString(String s) {
-        output.println(s);
+    public String readStringNext() {
+        return input.nextLine();
+    }
+
+    @Override
+    public int readIntNext() {
+        return input.nextInt();
     }
 }

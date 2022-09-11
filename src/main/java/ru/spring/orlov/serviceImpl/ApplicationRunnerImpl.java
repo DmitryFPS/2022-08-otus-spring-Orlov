@@ -25,9 +25,9 @@ public class ApplicationRunnerImpl {
     public void outputMenu() {
         StringBuilder resultTest = new StringBuilder();
         ioService.outputString("Your name");
-        resultTest.append(ioService.reader().next()).append(",");
+        resultTest.append(ioService.readStringNext()).append(",");
         ioService.outputString("Your last name");
-        resultTest.append(ioService.reader().next());
+        resultTest.append(ioService.readStringNext());
         System.out.println();
         ioService.outputString("Choose one of the following actions...");
         String nameAndLastNameStudent = String.join(" ", resultTest.toString().split(","));
@@ -37,7 +37,7 @@ public class ApplicationRunnerImpl {
     }
 
     public void menuItems(String nameAndLastNameStudent) {
-        int menuItem = ioService.reader().nextInt();
+        int menuItem = ioService.readIntNext();
         if (menuItem == TEST_RESULT) {
             System.out.println();
             questionnaireService.testing(FIELD_NAME).forEach(result -> System.out.println(result.getQuestion() + " : " + result.getAnswer()));
