@@ -1,6 +1,7 @@
 package ru.spring.orlov.daoSimpl;
 
 import au.com.bytecode.opencsv.CSVReader;
+import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy;
 import au.com.bytecode.opencsv.bean.CsvToBean;
 import lombok.AllArgsConstructor;
 import org.springframework.core.io.ClassPathResource;
@@ -15,32 +16,30 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ru.spring.orlov.configuration.AppConfig.setColumnMappingByQuestions;
-
 @Repository
 @AllArgsConstructor
 public class QuestionnaireDaoCSV implements QuestionnaireDao {
-
-    @Override
-    public List<Questionnaire> getByQuestion() {
+    public List<Questionnaire> testResults(String fieldName) {
         List<Questionnaire> answerList = new ArrayList<>();
 
-        try (InputStream resource = new ClassPathResource("questions.csv").getInputStream();
+        try (InputStream resource = new ClassPathResource(fieldName).getInputStream();
              InputStreamReader inputStreamReader = new InputStreamReader(resource);
-             CSVReader reader = new CSVReader(inputStreamReader)) {
+             CSVReader reader = new CSVReader(inputStreamReader, ',', '"', 0)) {
 
             CsvToBean<Questionnaire> csv = new CsvToBean<>();
-            List<Questionnaire> list = csv.parse(setColumnMappingByQuestions(), reader);
+            List<Questionnaire> list = csv.parse(setColumnMapping(new String[]{"question", "answer"}), reader);
             answerList.addAll(list);
 
         } catch (IOException e) {
-            throw new CSVReaderException("Error I/O " + e);
+            throw new CSVReaderException("Error reader csv questions and answer " + e);
         }
         return answerList;
     }
 
-    @Override
-    public List<Questionnaire> getByQuestionAndAnswer() {
-        return null;
+    public static ColumnPositionMappingStrategy<Questionnaire> setColumnMapping(String[] strings) {
+        ColumnPositionMappingStrategy<Questionnaire> strategy = new ColumnPositionMappingStrategy<>();
+        strategy.setType(Questionnaire.class);
+        strategy.setColumnMapping(strings);
+        return strategy;
     }
 }
