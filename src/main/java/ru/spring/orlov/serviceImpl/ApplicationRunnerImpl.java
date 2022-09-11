@@ -43,7 +43,7 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
     public void menuItems(String nameAndLastNameStudent) {
         int menuItem = ioService.readIntNext();
         if (menuItem == TEST_RESULT) {
-            questionnaireService.testing(FIELD_NAME).forEach(System.out::println);
+            questionnaireService.testing(FIELD_NAME).forEach(result -> System.out.println(result.getQuestion() + " : " + result.getAnswer()));
         } else if (menuItem == EXIT) {
             exitingApplication.exitApp(nameAndLastNameStudent);
         } else {
