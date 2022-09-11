@@ -1,12 +1,14 @@
 package ru.spring.orlov.view;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 import ru.spring.orlov.model.Questionnaire;
 import ru.spring.orlov.service.QuestionnaireService;
 
 import java.util.List;
 import java.util.Scanner;
 
+@Service
 @RequiredArgsConstructor
 public class StartPage {
 
@@ -24,9 +26,9 @@ public class StartPage {
     }
 
     public void testing() {
-        List<Questionnaire> result = questionnaireService.findByQuestionAndAnswer();
+        List<Questionnaire> result = questionnaireService.getByQuestion();
         for (Questionnaire q : result) {
-            System.out.println("Question: " + q.getQuestion() + " : " + "Answer: " + q.getAnswer());
+            System.out.println("Question: " + q.getQuestion());
         }
     }
 }
