@@ -3,13 +3,14 @@ package ru.spring.orlov.serviceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.spring.orlov.exception.NoSuchMenuItem;
+import ru.spring.orlov.service.ApplicationRunner;
 import ru.spring.orlov.service.ExitingApplication;
 import ru.spring.orlov.service.IOService;
 import ru.spring.orlov.service.QuestionnaireService;
 
 @Service
 @RequiredArgsConstructor
-public class ApplicationRunnerImpl {
+public class ApplicationRunnerImpl implements ApplicationRunner {
     private static final int TEST_RESULT = 1;
     private static final int EXIT = 2;
     private static final String FIELD_NAME = "resultTestings.csv";
@@ -18,10 +19,12 @@ public class ApplicationRunnerImpl {
     private final MenuItemsImpl menuItems;
     private final ExitingApplication exitingApplication;
 
+    @Override
     public void run() {
         outputMenu();
     }
 
+    @Override
     public void outputMenu() {
         StringBuilder resultTest = new StringBuilder();
         ioService.outputString("Your name");
@@ -36,13 +39,12 @@ public class ApplicationRunnerImpl {
         menuItems(nameAndLastNameStudent);
     }
 
+    @Override
     public void menuItems(String nameAndLastNameStudent) {
         int menuItem = ioService.readIntNext();
         if (menuItem == TEST_RESULT) {
-            System.out.println();
-            questionnaireService.testing(FIELD_NAME).forEach(result -> System.out.println(result.getQuestion() + " : " + result.getAnswer()));
+            questionnaireService.testing(FIELD_NAME).forEach(System.out::println);
         } else if (menuItem == EXIT) {
-            System.out.println();
             exitingApplication.exitApp(nameAndLastNameStudent);
         } else {
             throw new NoSuchMenuItem("There is no such menu item");
