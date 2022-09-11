@@ -8,7 +8,6 @@ import java.util.Scanner;
 
 @Service
 public class IOServiceStreams implements IOService {
-
     private final PrintStream output;
     private final Scanner input;
 

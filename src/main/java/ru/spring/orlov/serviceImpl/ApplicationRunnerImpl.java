@@ -10,12 +10,10 @@ import ru.spring.orlov.service.QuestionnaireService;
 
 @Service
 @RequiredArgsConstructor
-public class ApplicationRunner {
+public class ApplicationRunnerImpl {
     private static final int TEST_RESULT = 1;
     private static final int EXIT = 2;
-
     private static final String FIELD_NAME = "resultTestings.csv";
-
     private final IOService ioService;
     private final QuestionnaireService questionnaireService;
     private final MenuOptionsRegistry menuOptionsRegistry;
@@ -25,7 +23,7 @@ public class ApplicationRunner {
         outputMenu();
     }
 
-    private void outputMenu() {
+    public void outputMenu() {
         StringBuilder resultTest = new StringBuilder();
         ioService.outputString("Your name");
         resultTest.append(ioService.reader().next()).append(",");
@@ -39,7 +37,7 @@ public class ApplicationRunner {
         menuItems(nameAndLastNameStudent);
     }
 
-    private void menuItems(String nameAndLastNameStudent) {
+    public void menuItems(String nameAndLastNameStudent) {
         int menuItem = ioService.reader().nextInt();
         if (menuItem == TEST_RESULT) {
             System.out.println();

@@ -6,11 +6,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.spring.orlov.dao.QuestionnaireDao;
+import ru.spring.orlov.exception.CSVReaderException;
 import ru.spring.orlov.model.Questionnaire;
 
 import java.util.Arrays;
 import java.util.List;
 
+import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -76,8 +78,9 @@ class QuestionnaireDaoCSVTest {
     @Test()
     @DisplayName("Test check, we get an exception")
     void testResultsException() {
-//        when(questionnaireDao.testResults(FIELD_NAME)).thenThrow(CSVReaderException.class, () -> {
-//        });
+        when(questionnaireDao.testResults("xxx.csv")).thenThrow(new CSVReaderException("Error reader csv questions and answer"));
+        assertThrows(CSVReaderException.class, () -> {
+            questionnaireDao.testResults("xxx.csv");
+        });
     }
-
 }
