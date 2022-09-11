@@ -7,9 +7,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.spring.orlov.service.ExitingApplication;
 
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 @DisplayName("Class ExitingApplicationImpl")
 @ExtendWith(MockitoExtension.class)
 class ExitingApplicationImplTest {
+
+    private static final String FIELD_NAME = "resultTestings.csv";
 
     private ExitingApplication exitingApplication;
 
@@ -19,7 +24,14 @@ class ExitingApplicationImplTest {
     }
 
     @Test
-    void exitApp() {
+    @DisplayName("Test check, exit app FIELD NAME Successful")
+    void exitAppSuccessfulTest() {
+        assertTrue(exitingApplication.exitApp(FIELD_NAME));
+    }
 
+    @Test
+    @DisplayName("Test check, exit app FIELD NAME not Successful")
+    void exitAppNotSuccessfulTest() {
+        assertNotEquals(exitingApplication.exitApp(FIELD_NAME), false);
     }
 }

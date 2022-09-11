@@ -45,7 +45,7 @@ class QuestionnaireServiceImplTest {
 
     @Test
     @DisplayName("Test verification, we get the correct fields")
-    void findByQuestionAndAnswerSuccessful() {
+    void findByQuestionAndAnswerSuccessfulTest() {
         when(questionnaireDao.testResults(FIELD_NAME)).thenReturn(answerList);
 
         List<Questionnaire> questionnaireList = subj.testing(FIELD_NAME);
@@ -67,7 +67,7 @@ class QuestionnaireServiceImplTest {
 
     @Test
     @DisplayName("Test check, we get incorrect fields")
-    void findByQuestionAndAnswerNotSuccessful() {
+    void findByQuestionAndAnswerNotSuccessfulTest() {
         when(questionnaireDao.testResults(FIELD_NAME)).thenReturn(answerList);
 
         List<Questionnaire> questionnaireList = subj.testing(FIELD_NAME);
@@ -86,7 +86,7 @@ class QuestionnaireServiceImplTest {
 
     @Test()
     @DisplayName("Test check, we get an exception")
-    void testResultsException() {
+    void testResultsExceptionTest() {
         when(questionnaireDao.testResults("xxx.csv")).thenThrow(new CSVReaderException("Error reader csv questions and answer"));
         assertThrows(CSVReaderException.class, () -> {
             questionnaireDao.testResults("xxx.csv");

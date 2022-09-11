@@ -11,6 +11,7 @@ import ru.spring.orlov.service.MenuItems;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 @DisplayName("Class MenuItemsImpl")
 @ExtendWith(MockitoExtension.class)
@@ -25,11 +26,21 @@ class MenuItemsImplTest {
 
     @Test
     @DisplayName("Test check, list menu option")
-    void displayMenuItemsSuccessful() {
+    void displayMenuItemsSuccessfulTest() {
         List<MenuOption> optionList = menuItems.displayMenuItems();
         assertEquals(optionList.get(0).getId(), 1);
         assertEquals(optionList.get(0).getDescription(), "Test results");
         assertEquals(optionList.get(1).getId(), 2);
         assertEquals(optionList.get(1).getDescription(), "Exit");
+    }
+
+    @Test
+    @DisplayName("Test check, list menu option not successful")
+    void displayMenuItemsNotSuccessfulTest() {
+        List<MenuOption> optionList = menuItems.displayMenuItems();
+        assertNotEquals(optionList.get(0).getId(), 888);
+        assertNotEquals(optionList.get(0).getDescription(), "Test results888");
+        assertNotEquals(optionList.get(1).getId(), 888);
+        assertNotEquals(optionList.get(1).getDescription(), "Exit888");
     }
 }

@@ -6,7 +6,8 @@ import ru.spring.orlov.service.ExitingApplication;
 @Service
 public class ExitingApplicationImpl implements ExitingApplication {
     @Override
-    public void exitApp(String nameAndLastNameStudent) {
+    public boolean exitApp(String nameAndLastNameStudent) {
         System.out.println("By " + nameAndLastNameStudent);
+        return true;
     }
 }

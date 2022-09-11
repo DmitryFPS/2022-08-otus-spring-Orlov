@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import ru.spring.orlov.exception.NoSuchMenuItem;
 import ru.spring.orlov.service.ExitingApplication;
 import ru.spring.orlov.service.IOService;
-import ru.spring.orlov.service.MenuOptionsRegistry;
 import ru.spring.orlov.service.QuestionnaireService;
 
 @Service
@@ -16,7 +15,7 @@ public class ApplicationRunnerImpl {
     private static final String FIELD_NAME = "resultTestings.csv";
     private final IOService ioService;
     private final QuestionnaireService questionnaireService;
-    private final MenuOptionsRegistry menuOptionsRegistry;
+    private final MenuItemsImpl menuItems;
     private final ExitingApplication exitingApplication;
 
     public void run() {
@@ -33,7 +32,7 @@ public class ApplicationRunnerImpl {
         ioService.outputString("Choose one of the following actions...");
         String nameAndLastNameStudent = String.join(" ", resultTest.toString().split(","));
         System.out.println("Hello " + nameAndLastNameStudent);
-        menuOptionsRegistry.getAvailableMenuOptions().forEach(System.out::println);
+        menuItems.displayMenuItems().forEach(System.out::println);
         menuItems(nameAndLastNameStudent);
     }
 
