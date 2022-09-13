@@ -1,16 +1,21 @@
 package ru.spring.orlov;
 
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import ru.spring.orlov.view.StartPage;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import ru.spring.orlov.configuration.AppConfig;
+import ru.spring.orlov.service.ApplicationMenuService;
+import ru.spring.orlov.service.BasicQuestionStudentService;
 
 public class Main {
     public static void main(String[] args) {
-        try (ClassPathXmlApplicationContext context =
-                     new ClassPathXmlApplicationContext("spring-context.xml")) {
-            StartPage startPage =
-                    context.getBean("startPage", StartPage.class);
-            startPage.basicQuestions();
-            startPage.testing();
+        try (AnnotationConfigApplicationContext context =
+                     new AnnotationConfigApplicationContext(AppConfig.class)) {
+
+            BasicQuestionStudentService basicQuestionStudentService = context.getBean(BasicQuestionStudentService.class);
+            ApplicationMenuService applicationMenuService = context.getBean(ApplicationMenuService.class);
+
+            basicQuestionStudentService.askStudentBasicQuestion();
+            applicationMenuService.outputMenu();
+            applicationMenuService.selectMenuItem();
         }
     }
 }

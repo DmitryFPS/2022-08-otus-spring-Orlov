@@ -5,5 +5,5 @@ import ru.spring.orlov.model.Questionnaire;
 import java.util.List;
 
 public interface QuestionnaireService {
-    List<Questionnaire> findByQuestionAndAnswer();
+    List<Questionnaire> getQuestions();
 }
