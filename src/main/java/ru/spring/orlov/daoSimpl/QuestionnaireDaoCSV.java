@@ -20,12 +20,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class QuestionnaireDaoCSV implements QuestionnaireDao {
 
-    private static final String FIELD_NAME = "resultTestings.csv";
+    private static final String FILE_NAME = "resultTestings.csv";
 
     public List<Questionnaire> getQuestions() {
         List<Questionnaire> answerList = new ArrayList<>();
 
-        try (InputStream resource = new ClassPathResource(FIELD_NAME).getInputStream();
+        try (InputStream resource = new ClassPathResource(FILE_NAME).getInputStream();
              InputStreamReader inputStreamReader = new InputStreamReader(resource);
              CSVReader reader = new CSVReader(inputStreamReader, ',', '"', 0)) {
 
