@@ -19,19 +19,17 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class QuestionnaireDaoCSVTest {
 
-    private static final String FIELD_NAME = "resultTestings.csv";
-
     private QuestionnaireDao questionnaireDao;
     private List<Questionnaire> answerList;
 
     @BeforeEach
     void setUp() {
         answerList = Arrays.asList(
-                new Questionnaire("Do you have any development experience", "yes"),
-                new Questionnaire("Are you over 30 years old", "yes"),
-                new Questionnaire("Do you have a higher education", "yes"),
-                new Questionnaire("Do you live in Russia", "yes"),
-                new Questionnaire("Were you born in Russia", "no"));
+                new Questionnaire("Do you have any development experience", "yes", "no"),
+                new Questionnaire("Are you over 30 years old", "yes", "no"),
+                new Questionnaire("Do you have a higher education", "yes", "no"),
+                new Questionnaire("Do you live in Russia", "yes", "no"),
+                new Questionnaire("Were you born in Russia", "no", "no"));
         questionnaireDao = mock(QuestionnaireDaoCSV.class);
     }
 
@@ -47,11 +45,17 @@ class QuestionnaireDaoCSVTest {
         assertEquals(questionnaireList.get(3).getQuestion(), "Do you live in Russia");
         assertEquals(questionnaireList.get(4).getQuestion(), "Were you born in Russia");
 
-        assertNotNull(questionnaireList.get(0).getAnswer());
-        assertNotNull(questionnaireList.get(1).getAnswer());
-        assertNotNull(questionnaireList.get(2).getAnswer());
-        assertNotNull(questionnaireList.get(3).getAnswer());
-        assertNotNull(questionnaireList.get(4).getAnswer());
+        assertNotNull(questionnaireList.get(0).getAnswerOne());
+        assertNotNull(questionnaireList.get(1).getAnswerOne());
+        assertNotNull(questionnaireList.get(2).getAnswerOne());
+        assertNotNull(questionnaireList.get(3).getAnswerOne());
+        assertNotNull(questionnaireList.get(4).getAnswerOne());
+
+        assertNotNull(questionnaireList.get(0).getAnswerTwo());
+        assertNotNull(questionnaireList.get(1).getAnswerTwo());
+        assertNotNull(questionnaireList.get(2).getAnswerTwo());
+        assertNotNull(questionnaireList.get(3).getAnswerTwo());
+        assertNotNull(questionnaireList.get(4).getAnswerTwo());
     }
 
     @Test
@@ -66,10 +70,16 @@ class QuestionnaireDaoCSVTest {
         assertNotEquals(questionnaireList.get(3).getQuestion(), "Do you live in Russia888");
         assertNotEquals(questionnaireList.get(4).getQuestion(), "Were you born in Russia888");
 
-        assertNotNull(questionnaireList.get(0).getAnswer());
-        assertNotNull(questionnaireList.get(1).getAnswer());
-        assertNotNull(questionnaireList.get(2).getAnswer());
-        assertNotNull(questionnaireList.get(3).getAnswer());
-        assertNotNull(questionnaireList.get(4).getAnswer());
+        assertNotNull(questionnaireList.get(0).getAnswerOne());
+        assertNotNull(questionnaireList.get(1).getAnswerOne());
+        assertNotNull(questionnaireList.get(2).getAnswerOne());
+        assertNotNull(questionnaireList.get(3).getAnswerOne());
+        assertNotNull(questionnaireList.get(4).getAnswerOne());
+
+        assertNotNull(questionnaireList.get(0).getAnswerTwo());
+        assertNotNull(questionnaireList.get(1).getAnswerTwo());
+        assertNotNull(questionnaireList.get(2).getAnswerTwo());
+        assertNotNull(questionnaireList.get(3).getAnswerTwo());
+        assertNotNull(questionnaireList.get(4).getAnswerTwo());
     }
 }

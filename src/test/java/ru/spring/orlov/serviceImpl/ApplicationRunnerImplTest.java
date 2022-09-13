@@ -44,14 +44,6 @@ class ApplicationRunnerImplTest {
     }
 
     @Test
-    @DisplayName("Test check, method output menu, result test")
-    void outputMenuResultTest() {
-        when(ioService.readStringNext()).thenReturn("Dima");
-        when(ioService.readIntNext()).thenReturn(TEST_RESULT);
-        applicationRunner.basicQuestionAndStudentTesting();
-    }
-
-    @Test
     @DisplayName("Test check, method items menu, result test")
     void menuItemsResultTest() {
         when(ioService.readIntNext()).thenReturn(TEST_RESULT);
@@ -64,14 +56,6 @@ class ApplicationRunnerImplTest {
         when(ioService.readStringNext()).thenReturn("Dima");
         when(ioService.readIntNext()).thenReturn(EXIT);
         applicationRunner.run();
-    }
-
-    @Test
-    @DisplayName("Test check, method output menu, exit")
-    void outputMenuExitTest() {
-        when(ioService.readStringNext()).thenReturn("Dima");
-        when(ioService.readIntNext()).thenReturn(EXIT);
-        applicationRunner.basicQuestionAndStudentTesting();
     }
 
     @Test
@@ -88,16 +72,6 @@ class ApplicationRunnerImplTest {
         when(ioService.readIntNext()).thenReturn(INVALID_MENU_ITEM);
         assertThrows(NoSuchMenuItem.class, () -> {
             applicationRunner.run();
-        });
-    }
-
-    @Test
-    @DisplayName("Test check, method output menu, invalid menu item")
-    void outputMenuInvalidMenuItemTest() {
-        when(ioService.readStringNext()).thenReturn("Dima");
-        when(ioService.readIntNext()).thenReturn(INVALID_MENU_ITEM);
-        assertThrows(NoSuchMenuItem.class, () -> {
-            applicationRunner.basicQuestionAndStudentTesting();
         });
     }
 
