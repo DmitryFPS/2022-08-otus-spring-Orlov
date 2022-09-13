@@ -6,13 +6,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.spring.orlov.dao.QuestionnaireDao;
-import ru.spring.orlov.exception.CSVReaderException;
 import ru.spring.orlov.model.Questionnaire;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -40,8 +38,8 @@ class QuestionnaireDaoCSVTest {
     @Test
     @DisplayName("Test verification, we get the correct fields")
     void testResultsSuccessful() {
-        when(questionnaireDao.testResults(FIELD_NAME)).thenReturn(answerList);
-        List<Questionnaire> questionnaireList = questionnaireDao.testResults(FIELD_NAME);
+        when(questionnaireDao.getQuestions()).thenReturn(answerList);
+        List<Questionnaire> questionnaireList = questionnaireDao.getQuestions();
         assertNotEquals(questionnaireList.size(), 0);
         assertEquals(questionnaireList.get(0).getQuestion(), "Do you have any development experience");
         assertEquals(questionnaireList.get(1).getQuestion(), "Are you over 30 years old");
@@ -59,8 +57,8 @@ class QuestionnaireDaoCSVTest {
     @Test
     @DisplayName("Test check, we get incorrect fields")
     void testResultsNotSuccessful() {
-        when(questionnaireDao.testResults(FIELD_NAME)).thenReturn(answerList);
-        List<Questionnaire> questionnaireList = questionnaireDao.testResults(FIELD_NAME);
+        when(questionnaireDao.getQuestions()).thenReturn(answerList);
+        List<Questionnaire> questionnaireList = questionnaireDao.getQuestions();
         assertNotEquals(questionnaireList.size(), 888);
         assertNotEquals(questionnaireList.get(0).getQuestion(), "Do you have any development experience888");
         assertNotEquals(questionnaireList.get(1).getQuestion(), "Are you over 30 years old888");
@@ -73,14 +71,5 @@ class QuestionnaireDaoCSVTest {
         assertNotNull(questionnaireList.get(2).getAnswer());
         assertNotNull(questionnaireList.get(3).getAnswer());
         assertNotNull(questionnaireList.get(4).getAnswer());
-    }
-
-    @Test()
-    @DisplayName("Test check, we get an exception")
-    void testResultsException() {
-        when(questionnaireDao.testResults("xxx.csv")).thenThrow(new CSVReaderException("Error reader csv questions and answer"));
-        assertThrows(CSVReaderException.class, () -> {
-            questionnaireDao.testResults("xxx.csv");
-        });
     }
 }

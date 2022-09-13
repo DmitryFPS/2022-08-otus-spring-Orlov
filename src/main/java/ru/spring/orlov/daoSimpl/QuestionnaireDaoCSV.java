@@ -3,7 +3,7 @@ package ru.spring.orlov.daoSimpl;
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy;
 import au.com.bytecode.opencsv.bean.CsvToBean;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Repository;
 import ru.spring.orlov.dao.QuestionnaireDao;
@@ -17,17 +17,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class QuestionnaireDaoCSV implements QuestionnaireDao {
-    public List<Questionnaire> testResults(String fieldName) {
+
+    private static final String FIELD_NAME = "resultTestings.csv";
+
+    public List<Questionnaire> getQuestions() {
         List<Questionnaire> answerList = new ArrayList<>();
 
-        try (InputStream resource = new ClassPathResource(fieldName).getInputStream();
+        try (InputStream resource = new ClassPathResource(FIELD_NAME).getInputStream();
              InputStreamReader inputStreamReader = new InputStreamReader(resource);
              CSVReader reader = new CSVReader(inputStreamReader, ',', '"', 0)) {
 
             CsvToBean<Questionnaire> csv = new CsvToBean<>();
-            List<Questionnaire> list = csv.parse(setColumnMapping(new String[]{"question", "answer"}), reader);
+            List<Questionnaire> list = csv.parse(setColumnMapping(new String[]{"question", "answerOne", "answerTwo"}), reader);
             answerList.addAll(list);
 
         } catch (IOException e) {

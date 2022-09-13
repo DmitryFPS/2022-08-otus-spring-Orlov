@@ -5,33 +5,31 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
-import ru.spring.orlov.service.ExitingApplication;
+import ru.spring.orlov.service.ApplicationStopService;
 
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Class ExitingApplicationImpl")
 @ExtendWith(MockitoExtension.class)
-class ExitingApplicationImplTest {
+class ApplicationStopServiceImplTest {
 
-    private static final String FIELD_NAME = "resultTestings.csv";
-
-    private ExitingApplication exitingApplication;
+    private ApplicationStopService applicationStopService;
 
     @BeforeEach
     void setUp() {
-        exitingApplication = new ExitingApplicationImpl();
+        applicationStopService = new ApplicationStopServiceImpl();
     }
 
     @Test
     @DisplayName("Test check, exit app FIELD NAME Successful")
     void exitAppSuccessfulTest() {
-        assertTrue(exitingApplication.exitApp(FIELD_NAME));
+        assertTrue(applicationStopService.exitApp());
     }
 
     @Test
     @DisplayName("Test check, exit app FIELD NAME not Successful")
     void exitAppNotSuccessfulTest() {
-        assertNotEquals(exitingApplication.exitApp(FIELD_NAME), false);
+        assertNotEquals(applicationStopService.exitApp(), false);
     }
 }

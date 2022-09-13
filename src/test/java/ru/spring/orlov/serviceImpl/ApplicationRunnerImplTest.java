@@ -7,7 +7,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.spring.orlov.exception.NoSuchMenuItem;
 import ru.spring.orlov.service.ApplicationRunner;
-import ru.spring.orlov.service.ExitingApplication;
+import ru.spring.orlov.service.ApplicationStopService;
 import ru.spring.orlov.service.IOService;
 import ru.spring.orlov.service.QuestionnaireService;
 
@@ -26,17 +26,13 @@ class ApplicationRunnerImplTest {
 
     private ApplicationRunner applicationRunner;
     private IOService ioService;
-    private QuestionnaireService questionnaireService;
-    private MenuItemsImpl menuItems;
-    private ExitingApplication exitingApplication;
 
     @BeforeEach
     void setUp() {
         ioService = mock(IOServiceStreams.class);
-        questionnaireService = mock(QuestionnaireService.class);
-        menuItems = mock(MenuItemsImpl.class);
-        exitingApplication = mock(ExitingApplication.class);
-        applicationRunner = new ApplicationRunnerImpl(ioService, questionnaireService, menuItems, exitingApplication);
+        QuestionnaireService questionnaireService = mock(QuestionnaireService.class);
+        ApplicationStopService applicationStopService = mock(ApplicationStopService.class);
+        applicationRunner = new ApplicationRunnerImpl(ioService, questionnaireService, applicationStopService);
     }
 
     @Test
@@ -52,14 +48,14 @@ class ApplicationRunnerImplTest {
     void outputMenuResultTest() {
         when(ioService.readStringNext()).thenReturn("Dima");
         when(ioService.readIntNext()).thenReturn(TEST_RESULT);
-        applicationRunner.outputMenu();
+        applicationRunner.basicQuestionAndStudentTesting();
     }
 
     @Test
     @DisplayName("Test check, method items menu, result test")
     void menuItemsResultTest() {
         when(ioService.readIntNext()).thenReturn(TEST_RESULT);
-        applicationRunner.menuItems("Dima Dima");
+        applicationRunner.selectMenuItem();
     }
 
     @Test
@@ -75,14 +71,14 @@ class ApplicationRunnerImplTest {
     void outputMenuExitTest() {
         when(ioService.readStringNext()).thenReturn("Dima");
         when(ioService.readIntNext()).thenReturn(EXIT);
-        applicationRunner.outputMenu();
+        applicationRunner.basicQuestionAndStudentTesting();
     }
 
     @Test
     @DisplayName("Test check, method items menu, exit")
     void menuItemsExitTest() {
         when(ioService.readIntNext()).thenReturn(EXIT);
-        applicationRunner.menuItems("Dima Dima");
+        applicationRunner.selectMenuItem();
     }
 
     @Test
@@ -101,7 +97,7 @@ class ApplicationRunnerImplTest {
         when(ioService.readStringNext()).thenReturn("Dima");
         when(ioService.readIntNext()).thenReturn(INVALID_MENU_ITEM);
         assertThrows(NoSuchMenuItem.class, () -> {
-            applicationRunner.outputMenu();
+            applicationRunner.basicQuestionAndStudentTesting();
         });
     }
 
@@ -110,7 +106,7 @@ class ApplicationRunnerImplTest {
     void menuItemsInvalidMenuItemTest() {
         when(ioService.readIntNext()).thenReturn(INVALID_MENU_ITEM);
         assertThrows(NoSuchMenuItem.class, () -> {
-            applicationRunner.menuItems("Dima Dima");
+            applicationRunner.selectMenuItem();
         });
     }
 }

@@ -14,7 +14,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
     private final QuestionnaireDao questionnaireDao;
 
     @Override
-    public List<Questionnaire> testing(String fileName) {
-        return questionnaireDao.testResults(fileName);
+    public List<Questionnaire> getQuestions() {
+        return questionnaireDao.getQuestions();
     }
 }

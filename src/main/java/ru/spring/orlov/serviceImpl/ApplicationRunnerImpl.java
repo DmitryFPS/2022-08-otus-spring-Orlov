@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.spring.orlov.exception.NoSuchMenuItem;
 import ru.spring.orlov.service.ApplicationRunner;
-import ru.spring.orlov.service.ExitingApplication;
+import ru.spring.orlov.service.ApplicationStopService;
 import ru.spring.orlov.service.IOService;
 import ru.spring.orlov.service.QuestionnaireService;
 
@@ -13,41 +13,47 @@ import ru.spring.orlov.service.QuestionnaireService;
 public class ApplicationRunnerImpl implements ApplicationRunner {
     private static final int TEST_RESULT = 1;
     private static final int EXIT = 2;
-    private static final String FIELD_NAME = "resultTestings.csv";
     private final IOService ioService;
     private final QuestionnaireService questionnaireService;
-    private final MenuItemsImpl menuItems;
-    private final ExitingApplication exitingApplication;
+    private final ApplicationStopService applicationStopService;
 
     @Override
     public void run() {
+        basicQuestionAndStudentTesting();
         outputMenu();
     }
 
     @Override
-    public void outputMenu() {
-        StringBuilder resultTest = new StringBuilder();
+    public void basicQuestionAndStudentTesting() {
+        StringBuilder basicQuestion = new StringBuilder();
         ioService.outputString("Your name");
-        resultTest.append(ioService.readStringNext()).append(",");
+        basicQuestion.append(readSelectedOption()).append(",");
         ioService.outputString("Your last name");
-        resultTest.append(ioService.readStringNext());
-        System.out.println();
+        basicQuestion.append(readSelectedOption());
+        String nameAndLastNameStudent = String.join(" ", basicQuestion.toString().split(","));
+        ioService.outputString("Hello " + nameAndLastNameStudent);
+    }
+
+    private void outputMenu() {
         ioService.outputString("Choose one of the following actions...");
-        String nameAndLastNameStudent = String.join(" ", resultTest.toString().split(","));
-        System.out.println("Hello " + nameAndLastNameStudent);
-        menuItems.displayMenuItems().forEach(System.out::println);
-        menuItems(nameAndLastNameStudent);
+        ioService.outputString("1. Test");
+        ioService.outputString("2. Exit");
+        selectMenuItem();
     }
 
     @Override
-    public void menuItems(String nameAndLastNameStudent) {
+    public void selectMenuItem() {
         int menuItem = ioService.readIntNext();
         if (menuItem == TEST_RESULT) {
-            questionnaireService.testing(FIELD_NAME).forEach(result -> System.out.println(result.getQuestion() + " : " + result.getAnswer()));
+            questionnaireService.getQuestions().forEach(result -> ioService.outputString(result.getQuestion() + " : " + result.getAnswerOne() + " and " + result.getAnswerTwo()));
         } else if (menuItem == EXIT) {
-            exitingApplication.exitApp(nameAndLastNameStudent);
+            applicationStopService.exitApp();
         } else {
             throw new NoSuchMenuItem("There is no such menu item");
         }
+    }
+
+    public String readSelectedOption() {
+        return ioService.readStringNext();
     }
 }

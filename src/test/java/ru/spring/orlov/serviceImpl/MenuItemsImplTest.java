@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.spring.orlov.model.MenuOption;
-import ru.spring.orlov.service.MenuItems;
 
 import java.util.List;
 

@@ -3,7 +3,7 @@ package ru.spring.orlov.service;
 public interface ApplicationRunner {
     void run();
 
-    void outputMenu();
+    void basicQuestionAndStudentTesting();
 
-    void menuItems(String nameAndLastNameStudent);
+    void selectMenuItem();
 }

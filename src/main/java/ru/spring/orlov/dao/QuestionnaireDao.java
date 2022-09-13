@@ -5,5 +5,5 @@ import ru.spring.orlov.model.Questionnaire;
 import java.util.List;
 
 public interface QuestionnaireDao {
-    List<Questionnaire> testResults(String fieldName);
+    List<Questionnaire> getQuestions();
 }
