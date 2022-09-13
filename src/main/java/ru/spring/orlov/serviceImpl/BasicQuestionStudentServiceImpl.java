@@ -20,10 +20,10 @@ public class BasicQuestionStudentServiceImpl implements BasicQuestionStudentServ
         basicQuestion.append(readSelectedOption()).append(",");
         baseQuestionsPrintService.askForLastName();
         basicQuestion.append(readSelectedOption());
-        baseQuestionsPrintService.getBasicQuestion(basicQuestion.toString());
+        baseQuestionsPrintService.askBasicQuestion(basicQuestion.toString());
     }
 
-    public String readSelectedOption() {
+    private String readSelectedOption() {
         return ioService.readStringNext();
     }
 }

@@ -5,5 +5,5 @@ public interface BaseQuestionsPrintService {
 
     void askForLastName();
 
-    void getBasicQuestion(String basicQuestion);
+    void askBasicQuestion(String basicQuestion);
 }

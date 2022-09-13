@@ -13,7 +13,7 @@ import ru.spring.orlov.service.IOService;
 public class ApplicationMenuServiceImpl implements ApplicationMenuService {
 
     private final IOService ioService;
-    private static final int TEST_RESULT = 1;
+    private static final int TEST = 1;
     private static final int EXIT = 2;
     private final ApplicationStopService applicationStopService;
     private final ApplicationMenuPrintService applicationMenuPrintService;
@@ -26,8 +26,8 @@ public class ApplicationMenuServiceImpl implements ApplicationMenuService {
     @Override
     public void selectMenuItem() {
         int menuItem = ioService.readIntNext();
-        if (menuItem == TEST_RESULT) {
-            applicationMenuPrintService.showTestResults();
+        if (menuItem == TEST) {
+            applicationMenuPrintService.showTest();
         } else if (menuItem == EXIT) {
             applicationStopService.exitApp();
         } else {

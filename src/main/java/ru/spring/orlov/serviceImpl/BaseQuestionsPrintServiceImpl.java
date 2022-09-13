@@ -22,7 +22,7 @@ public class BaseQuestionsPrintServiceImpl implements BaseQuestionsPrintService 
     }
 
     @Override
-    public void getBasicQuestion(String basicQuestion) {
+    public void askBasicQuestion(String basicQuestion) {
         ioService.outputString(String.join(" ", basicQuestion.split(",")));
     }
 }

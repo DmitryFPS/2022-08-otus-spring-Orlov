@@ -22,7 +22,7 @@ public class ApplicationMenuPrintServiceImpl implements ApplicationMenuPrintServ
     }
 
     @Override
-    public void showTestResults() {
+    public void showTest() {
         questionnaireService.getQuestions().forEach(result -> ioService
                 .outputString(result.getQuestion() + " : " + result.getAnswerOne() + " and " + result.getAnswerTwo()));
     }
